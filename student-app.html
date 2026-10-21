@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Student Companion – VIT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1c2a3e;--mute:#6b7685;--line:#dfe3e8;--navy:#1c2a3e;--onnavy:#fff;--teal:#0f766e;--red:#b91c1c;--amber:#b45309;--green:#0f766e;--page:#e9ecf0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141b;--card:#171e28;--ink:#e7ebf0;--mute:#93a0b1;--line:#2a3441;--navy:#e7ebf0;--onnavy:#0f141b;--teal:#2dd4bf;--red:#f87171;--amber:#fbbf24;--page:#080b10}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f141b;--card:#171e28;--ink:#e7ebf0;--mute:#93a0b1;--line:#2a3441;--navy:#e7ebf0;--onnavy:#0f141b;--teal:#2dd4bf;--red:#f87171;--amber:#fbbf24;--page:#080b10}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--page);color:var(--ink);display:flex;justify-content:center;align-items:center;font-size:14px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.phone{width:100%;max-width:390px;height:100%;max-height:820px;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;position:relative}
+@media(min-width:500px){.phone{border-radius:28px;border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.15)}}
+.screen{display:none;flex:1;overflow-y:auto;padding-bottom:16px}
+.screen.on{display:block}
+.head{background:var(--bg);padding:22px 20px 14px;border-bottom:1px solid var(--line)}
+.head h1{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.sub{font-size:11px;color:var(--mute);margin-top:6px;letter-spacing:.02em}
+.row{display:flex;justify-content:space-between;align-items:center}
+.pad{padding:0 20px}
+h2{font-size:17px;font-weight:600}
+.tag{font-size:11px;color:var(--mute)}
+.sec{margin:22px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:12px}.stat small{font-size:11px;color:var(--mute)}
+.stat b{display:block;font-size:30px;margin:8px 0 4px;font-weight:700}
+.up{font-size:10.5px;color:var(--green);font-weight:600}.due{font-size:10.5px;color:var(--amber);font-weight:600}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{height:78px;padding:12px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:6px;font-weight:500}
+.tile.dark{background:var(--navy);color:var(--onnavy);border-color:var(--navy)}
+.tile .top{display:flex;justify-content:space-between;font-size:12px}
+.sched{padding:12px}
+.next{border-left:3px solid var(--teal);padding-left:10px}
+.next small{font-size:9.5px;color:var(--teal);font-weight:700}
+.next b{display:block;font-size:16px;margin:2px 0}
+.time{width:42px;font-size:15px;font-weight:600}.time small{display:block;font-size:10px;color:var(--mute);font-weight:400}
+.bar{height:3px;background:var(--line);border-radius:2px;margin-top:8px}
+.bar i{display:block;height:100%;border-radius:2px;background:var(--teal)}
+.bar.low i{background:var(--red)}
+.att{padding:14px;margin:0 20px}.att+.att{margin-top:0}
+.att .l{font-size:13px;font-weight:500}.ok{font-size:10.5px;color:var(--green);font-weight:600}.lowt{font-size:10.5px;color:var(--red);font-weight:600}
+.att .item+.item{margin-top:14px}
+.alert{display:flex;gap:8px;margin:12px 20px 0;font-size:11.5px;color:var(--mute);line-height:1.45}
+.alert svg{flex:none;color:var(--red)}
+.asg{display:flex;width:100%;text-align:left;justify-content:space-between;align-items:flex-end;padding:12px 14px;border-bottom:1px solid var(--line)}
+.asg:last-child{border:0}.asg small{font-size:10px;color:var(--mute)}.asg b{display:block;font-weight:500;font-size:15px;margin:3px 0}
+.st{font-size:10.5px;font-weight:600}.st.prog{color:var(--amber)}.st.todo{color:var(--mute)}.st.done{color:var(--green)}
+.asg.done b{text-decoration:line-through;color:var(--mute)}
+.chips{display:flex;gap:8px;padding:0 20px;margin:16px 0 4px;overflow-x:auto}
+.chip{padding:6px 12px;border:1px solid var(--line);border-radius:99px;font-size:12px;background:var(--card);white-space:nowrap}
+.chip.on{background:var(--navy);color:var(--onnavy);border-color:var(--navy)}
+.note{display:flex;gap:12px;padding:14px;width:100%;text-align:left;border-bottom:1px solid var(--line)}
+.note:last-child{border:0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:6px;flex:none}
+.note.read .dot{background:transparent}.note.read b{font-weight:500;color:var(--mute)}
+.note b{display:block;font-size:14px;margin-bottom:2px}.note span{font-size:12px;color:var(--mute);line-height:1.4}
+.note time{font-size:10.5px;color:var(--mute);margin-left:auto;white-space:nowrap}
+.course{padding:14px;margin-bottom:10px;width:100%;text-align:left;display:block}
+.course b{font-size:15px}.course small{display:block;color:var(--mute);font-size:11.5px;margin:3px 0 0}
+.mods div{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.mods div:last-child{border:0}
+.res{display:flex;justify-content:space-between;align-items:center;width:100%;padding:12px 0;border-bottom:1px solid var(--line);text-align:left}
+.res b{display:block;font-weight:500;font-size:13.5px}.res small{color:var(--mute);font-size:11px}
+.btn{display:block;width:100%;padding:12px;background:var(--teal);color:#fff;font-weight:600;border-radius:4px;text-align:center}
+:root[data-theme="dark"] .btn{color:#06201d}
+.prof{display:flex;gap:14px;align-items:center;padding:16px}
+.av{width:56px;height:56px;border-radius:50%;background:var(--navy);color:var(--onnavy);display:grid;place-items:center;font-weight:700;font-size:20px}
+.set{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid var(--line)}
+.set:last-child{border:0}.set small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--teal)}.sw[aria-checked="true"]::after{transform:translateX(18px)}
+.fb{width:100%;min-height:70px;padding:10px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--ink);font:inherit;resize:none}
+.toast{position:absolute;left:50%;bottom:78px;transform:translateX(-50%);background:var(--navy);color:var(--onnavy);padding:8px 14px;border-radius:4px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+nav{display:flex;border-top:1px solid var(--line);background:var(--bg)}
+nav button{flex:1;padding:8px 0 10px;font-size:10.5px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:4px;border-top:2px solid transparent;margin-top:-1px;position:relative}
+nav button.on{color:var(--ink);font-weight:600;border-top-color:var(--navy)}
+nav .badge{position:absolute;top:4px;left:56%;background:var(--red);color:#fff;font-size:9px;border-radius:99px;padding:1px 5px;font-weight:700}
+.back{font-size:12px;color:var(--mute);margin-top:8px;display:block}
+svg{display:block}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- 1 DASHBOARD -->
+<section class="screen on" id="s0">
+ <div class="head"><div class="row"><h1>Dashboard</h1><button class="card" style="width:44px;height:44px;display:grid;place-items:center" data-go="4" aria-label="Profile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/></svg></button></div><div class="sub">VIT UNIVERSITY / SEMESTER 07</div></div>
+ <div class="pad">
+  <div class="row sec" style="margin-top:18px"><b style="font-weight:500;font-size:15px">Good morning, Aditya.</b><span class="tag">WED, 21 OCT</span></div>
+  <div class="stats">
+   <div class="card stat"><small>Overall attendance:</small><b id="ovr">88%</b><span class="up">↑ 3% this month</span></div>
+   <div class="card stat"><small>Pending tasks:</small><b id="pend">4</b><span class="due">Next due tomorrow</span></div>
+  </div>
+  <div class="row sec"><h2>Your workspace</h2><span class="tag">QUICK ACCESS</span></div>
+  <div class="tiles">
+   <button class="tile dark" data-go="0" id="ttBtn"><div class="top"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>↗</div>View timetable</button>
+   <button class="tile" data-go="1"><div class="top"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c1-5 11-5 12 0M15 12l2 2 4-4"/></svg>↗</div>Attendance details</button>
+   <button class="tile" data-go="1" data-scroll="asg"><div class="top"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h10l4 4v12H5zM9 14l5-5"/></svg><span id="tAsg">04</span></div>Assignments</button>
+   <button class="tile" data-go="2"><div class="top"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 17V11a6 6 0 0112 0v6l2 2H4zM10 21h4"/></svg><span id="tNot">03</span></div>Notifications</button>
+  </div>
+  <div class="row sec"><h2>Today’s schedule</h2><span class="tag">2 LECTURES LEFT</span></div>
+  <div class="card sched" id="sched"></div>
+ </div>
+</section>
+
+<!-- 2 OVERVIEW -->
+<section class="screen" id="s1">
+ <div class="head"><h1>Academic Overview</h1><button class="back" data-go="0">← Back to dashboard</button></div>
+ <div class="pad"><div class="row sec"><h2>Subject attendance</h2><span class="tag">THIS SEMESTER</span></div></div>
+ <div class="card att" id="attBox"></div>
+ <div class="alert"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg><span>Machine Learning is below the 75% minimum. Attend your next lecture to get back on track.</span></div>
+ <div class="pad"><div class="row sec" id="asg"><h2>Assignments</h2><span class="tag" id="asgCount">04 PENDING</span></div>
+ <div class="chips" style="padding:0;margin:0 0 10px" id="asgChips"></div>
+ <div class="card" id="asgList"></div><p class="tag" style="margin-top:8px">Tap an assignment to cycle its status. Deadlines are in campus local time.</p></div>
+</section>
+
+<!-- 3 NOTIFICATIONS -->
+<section class="screen" id="s2">
+ <div class="head"><div class="row"><h1>Notifications</h1><button class="tag" id="markAll" style="color:var(--teal);font-weight:600;font-size:12px">Mark all read</button></div><div class="sub" id="nSub">3 UNREAD</div></div>
+ <div class="chips" id="nChips"></div>
+ <div class="pad" style="margin-top:10px"><div class="card" id="nList"></div></div>
+</section>
+
+<!-- 4 COURSES -->
+<section class="screen" id="s3">
+ <div class="head"><h1>Courses</h1><div class="sub">LEARNING RESOURCES · SEMESTER 07</div></div>
+ <div class="pad" id="cList" style="margin-top:18px"></div>
+ <div class="pad" id="cDetail" hidden>
+  <button class="back" id="cBack" style="margin:16px 0 0">← All courses</button>
+  <div class="sec" style="margin-top:12px"><h2 id="cName"></h2><div class="tag" id="cMeta" style="margin-top:4px"></div></div>
+  <div class="chips" style="padding:0" id="cTabs"></div>
+  <div class="card" style="padding:4px 14px;margin-top:10px" id="cBody"></div>
+ </div>
+</section>
+
+<!-- 5 PROFILE -->
+<section class="screen" id="s4">
+ <div class="head"><h1>Profile &amp; Settings</h1><div class="sub">MANAGE YOUR ACCOUNT</div></div>
+ <div class="pad">
+  <div class="card prof" style="margin-top:18px"><div class="av">AK</div><div><b style="font-size:16px">Aditya K.</b><div class="tag" style="margin-top:3px">B.Tech CSE · Reg. 22BCE0000<br>aditya@vitstudent.ac.in</div></div></div>
+  <div class="sec"><h2>Preferences</h2></div>
+  <div class="card" id="setList"></div>
+  <div class="sec"><h2>Send feedback</h2></div>
+  <textarea class="fb" id="fbText" placeholder="Tell us what to improve in this app"></textarea>
+  <button class="btn" id="fbBtn" style="margin-top:8px">Submit feedback</button>
+  <button class="tag" style="display:block;margin:18px auto;color:var(--red);font-size:13px;font-weight:600" id="logout">Log out</button>
+ </div>
+</section>
+
+<div class="toast" id="toast"></div>
+<nav id="nav"></nav>
+</div>
+
+<script>
+var I={
+ home:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',
+ bar:'<path d="M6 20V12M12 20V5M18 20v-5"/>',
+ bell:'<path d="M6 17V11a6 6 0 0112 0v6l2 2H4zM10 21h4"/>',
+ book:'<path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>',
+ arr:'<path d="M7 17L17 7M9 7h8v8"/>'
+};
+function ic(n,s){return '<svg width="'+(s||20)+'" height="'+(s||20)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+I[n]+'</svg>'}
+function $(id){return document.getElementById(id)}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('show')},1800)}
+
+/* data */
+var subjects=[['UI - UX',92],['Machine Learning',74],['Computer Networks',98]];
+var asg=[{c:'UI - UX',t:'Interaction Design',d:'Due 22 Oct · 11:59 PM',s:'prog'},{c:'Machine Learning',t:'Random Forest Algorithm',d:'Due 23 Oct · 5:00 PM',s:'todo'},{c:'Computer Networks',t:'TCP/IP lab report',d:'Due 25 Oct · 11:59 PM',s:'prog'},{c:'UI - UX',t:'Project Document',d:'Due 27 Oct · 5:00 PM',s:'todo'}];
+var SL={prog:'In progress',todo:'To do',done:'Done'};
+var notes=[{k:'Alert',t:'Low attendance: Machine Learning',m:'You are at 74%. The minimum is 75%.',w:'8:10 AM',r:0},{k:'Class',t:'UI - UX moved to SJT 223',m:'Today’s 10:00 lecture has a new room.',w:'7:45 AM',r:0},{k:'Deadline',t:'Interaction Design due tomorrow',m:'Submit before 11:59 PM on the portal.',w:'Yesterday',r:0},{k:'Exam',t:'CAT 2 timetable published',m:'Check dates and seating in the exam cell page.',w:'Mon',r:1},{k:'Class',t:'Peer tutor session confirmed',m:'UI - UX with Prof Jevitha, 4:00 PM.',w:'Sun',r:1}];
+var courses=[{n:'UI - UX',f:'Prof Jevitha',code:'CSE3012',mods:['Module 1 · Design thinking','Module 2 · Wireframing','Module 3 · Prototyping','Module 4 · Usability testing'],res:[['Figma starter kit','Template · 2 MB'],['Nielsen’s 10 heuristics','Reading · 6 min'],['Lecture 9 recording','Video · 52 min']]},
+ {n:'Machine Learning',f:'Prof Rao',code:'CSE4020',mods:['Module 1 · Regression','Module 2 · Decision trees','Module 3 · Ensembles','Module 4 · Neural networks'],res:[['Random forest notes','PDF · 1.4 MB'],['Scikit-learn guide','Reading · 12 min'],['Lab 6 dataset','CSV · 800 KB']]},
+ {n:'Computer Networks',f:'Prof Mehta',code:'CSE3003',mods:['Module 1 · Network layers','Module 2 · TCP/IP','Module 3 · Routing','Module 4 · Network security'],res:[['Packet tracer files','ZIP · 5 MB'],['TCP handshake explained','Video · 14 min'],['Previous year papers','PDF · 3 MB']]}];
+var sets=[['dark','Dark mode','Easier on the eyes at night',false],['push','Push notifications','Class changes and deadlines',true],['remind','Deadline reminders','24 hours before due time',true],['lowatt','Low attendance alerts','When a subject drops below 75%',true]];
+var sched=[['10:00','11:00','UI-UX','SJT-218 · Prof. Jevitha','UP NEXT · IN 19 MIN'],['13:00','14:00','Design class','SJT-223','LATER TODAY']];
+
+/* navigation */
+var tabs=[['Home','home'],['Overview','bar'],['Alerts','bell'],['Courses','book'],['Profile','user']];
+function go(i,sc){
+ for(var k=0;k<5;k++){$('s'+k).classList.toggle('on',k===i)}
+ [].forEach.call($('nav').children,function(b,k){b.classList.toggle('on',k===i);b.setAttribute('aria-current',k===i?'page':'false')});
+ var s=$('s'+i);s.scrollTop=0;
+ if(sc){var e=$(sc);if(e)s.scrollTop=e.offsetTop-10}
+}
+function drawNav(){
+ var unread=notes.filter(function(n){return!n.r}).length;
+ $('nav').innerHTML=tabs.map(function(t,i){return '<button data-go="'+i+'" class="'+(i==0?'on':'')+'">'+ic(t[1],20)+t[0]+(i==2&&unread?'<span class="badge">'+unread+'</span>':'')+'</button>'}).join('');
+}
+document.addEventListener('click',function(e){
+ var b=e.target.closest('[data-go]');
+ if(b){go(+b.dataset.go,b.dataset.scroll)}
+});
+
+/* dashboard */
+function drawDash(){
+ $('sched').innerHTML=sched.map(function(s,i){
+  return '<div class="row" style="'+(i?'border-top:1px solid var(--line);margin-top:12px;padding-top:12px':'')+'"><div style="display:flex;gap:12px;align-items:center"><div class="time">'+s[0]+'<small>'+s[1]+'</small></div><div class="'+(i?'':'next')+'"><small style="'+(i?'color:var(--mute);font-size:9.5px;font-weight:700':'')+'">'+s[4]+'</small><b style="font-size:'+(i?'14':'16')+'px;display:block;margin:2px 0">'+s[2]+'</b><span class="tag">'+s[3]+'</span></div></div></div>'}).join('');
+ var p=asg.filter(function(a){return a.s!=='done'}).length;
+ $('pend').textContent=p;$('tAsg').textContent=('0'+p).slice(-2);$('asgCount').textContent=('0'+p).slice(-2)+' PENDING';
+ var u=notes.filter(function(n){return!n.r}).length;$('tNot').textContent=('0'+u).slice(-2);
+}
+
+/* overview */
+function drawAtt(){
+ $('attBox').innerHTML=subjects.map(function(s){var low=s[1]<75;
+  return '<div class="item"><div class="row"><span class="l">'+s[0]+': '+s[1]+'%</span><span class="'+(low?'lowt':'ok')+'">'+(low?'Low alert':'On track')+'</span></div><div class="bar '+(low?'low':'')+'"><i style="width:'+s[1]+'%"></i></div></div>'}).join('');
+}
+var af='all';
+function drawAsg(){
+ $('asgChips').innerHTML=[['all','All'],['todo','To do'],['prog','In progress'],['done','Done']].map(function(c){return '<button class="chip '+(af==c[0]?'on':'')+'" data-af="'+c[0]+'">'+c[1]+'</button>'}).join('');
+ var l=asg.map(function(a,i){return[a,i]}).filter(function(x){return af=='all'||x[0].s==af});
+ $('asgList').innerHTML=l.length?l.map(function(x){var a=x[0];
+  return '<button class="asg '+(a.s=='done'?'done':'')+'" data-a="'+x[1]+'"><div><small>'+a.c+'</small><b>'+a.t+'</b><small>'+a.d+'</small></div><div style="text-align:right"><div class="st '+a.s+'">'+SL[a.s]+'</div><div style="margin-top:8px">'+ic('arr',14)+'</div></div></button>'}).join(''):'<p class="tag" style="padding:16px">Nothing here yet. Try another filter.</p>';
+ drawDash();
+}
+$('s1').addEventListener('click',function(e){
+ var c=e.target.closest('[data-af]');if(c){af=c.dataset.af;drawAsg();return}
+ var a=e.target.closest('[data-a]');if(a){var o=asg[+a.dataset.a],n={todo:'prog',prog:'done',done:'todo'};o.s=n[o.s];drawAsg();toast(o.t+': '+SL[o.s])}
+});
+
+/* notifications */
+var nf='All';
+function drawNotes(){
+ var kinds=['All','Alert','Class','Deadline','Exam'];
+ $('nChips').innerHTML=kinds.map(function(k){return '<button class="chip '+(nf==k?'on':'')+'" data-nf="'+k+'">'+k+'</button>'}).join('');
+ var l=notes.map(function(n,i){return[n,i]}).filter(function(x){return nf=='All'||x[0].k==nf});
+ $('nList').innerHTML=l.length?l.map(function(x){var n=x[0];
+  return '<button class="note '+(n.r?'read':'')+'" data-n="'+x[1]+'"><span class="dot"></span><div><b>'+n.t+'</b><span>'+n.m+'</span></div><time>'+n.w+'</time></button>'}).join(''):'<p class="tag" style="padding:16px">No '+nf.toLowerCase()+' notifications. You are all caught up.</p>';
+ var u=notes.filter(function(n){return!n.r}).length;$('nSub').textContent=u?u+' UNREAD':'ALL CAUGHT UP';
+ drawNav();[].forEach.call($('nav').children,function(b,k){b.classList.toggle('on',k===2)});drawDash();
+}
+$('s2').addEventListener('click',function(e){
+ var c=e.target.closest('[data-nf]');if(c){nf=c.dataset.nf;drawNotes();return}
+ var n=e.target.closest('[data-n]');if(n){notes[+n.dataset.n].r=1;drawNotes()}
+});
+$('markAll').onclick=function(){notes.forEach(function(n){n.r=1});drawNotes();toast('All notifications marked read')};
+
+/* courses */
+var cur=0,ctab='Modules';
+function drawCourses(){
+ $('cList').innerHTML=courses.map(function(c,i){return '<button class="card course" data-c="'+i+'"><div class="row"><b>'+c.n+'</b>'+ic('arr',14)+'</div><small>'+c.code+' · '+c.f+'</small><div class="bar"><i style="width:'+(40+i*15)+'%"></i></div><small style="margin-top:6px">'+(40+i*15)+'% of syllabus covered</small></button>'}).join('');
+}
+function drawDetail(){
+ var c=courses[cur];$('cName').textContent=c.n;$('cMeta').textContent=c.code+' · '+c.f;
+ $('cTabs').innerHTML=['Modules','Resources'].map(function(t){return '<button class="chip '+(ctab==t?'on':'')+'" data-ct="'+t+'">'+t+'</button>'}).join('');
+ $('cBody').innerHTML=ctab=='Modules'?'<div class="mods">'+c.mods.map(function(m,i){return '<div><span>'+m+'</span><span class="'+(i<2?'ok':'tag')+'">'+(i<2?'Covered':'Upcoming')+'</span></div>'}).join('')+'</div>':c.res.map(function(r){return '<button class="res" data-r="'+r[0]+'"><div><b>'+r[0]+'</b><small>'+r[1]+'</small></div>'+ic('arr',16)+'</button>'}).join('');
+}
+$('s3').addEventListener('click',function(e){
+ var c=e.target.closest('[data-c]');if(c){cur=+c.dataset.c;ctab='Modules';$('cList').hidden=true;$('cDetail').hidden=false;drawDetail();$('s3').scrollTop=0;return}
+ var t=e.target.closest('[data-ct]');if(t){ctab=t.dataset.ct;drawDetail();return}
+ var r=e.target.closest('[data-r]');if(r){toast('Opening '+r.dataset.r)}
+});
+$('cBack').onclick=function(){$('cList').hidden=false;$('cDetail').hidden=true};
+
+/* profile */
+function theme(d){document.documentElement.setAttribute('data-theme',d?'dark':'light')}
+function drawSets(){
+ $('setList').innerHTML=sets.map(function(s,i){return '<div class="set"><div>'+s[1]+'<small>'+s[2]+'</small></div><button class="sw" role="switch" aria-label="'+s[1]+'" aria-checked="'+s[3]+'" data-s="'+i+'"></button></div>'}).join('');
+}
+$('setList').addEventListener('click',function(e){
+ var b=e.target.closest('[data-s]');if(!b)return;var s=sets[+b.dataset.s];s[3]=!s[3];drawSets();
+ if(s[0]=='dark'){theme(s[3]);try{localStorage.setItem('dark',s[3]?'1':'0')}catch(x){}}
+ toast(s[1]+(s[3]?' on':' off'));
+});
+$('fbBtn').onclick=function(){var v=$('fbText');if(!v.value.trim()){toast('Write a comment before submitting');return}v.value='';toast('Thanks, feedback saved')};
+$('logout').onclick=function(){toast('You have been logged out')};
+
+/* init */
+try{if(localStorage.getItem('dark')==='1'){sets[0][3]=true;theme(true)}}catch(x){}
+drawNav();drawDash();drawAtt();drawAsg();drawNotes();drawCourses();drawSets();go(0);
+</script>
+</body>
+</html>
